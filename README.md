@@ -46,6 +46,12 @@ Default value: `true`
 
 A boolean value that is used to decide if empty folders will be exclude from the output.
 
+#### options.structured
+Type: `Boolean`
+Default value: `true`
+
+A boolean value that is used to decide if output will be structured.
+
 ### Usage Examples
 
 #### Default Options
@@ -63,7 +69,7 @@ grunt.initConfig({
 ```
 
 #### Custom Options
-In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store the result in `dest/custom_options`. Folder `src/` will be ignored (the analysis starts at sub folders) and empty folders are  
+In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store the result in `dest/custom_options`. Folder `src/` will be ignored (the analysis starts at sub folders) and empty folders are not excluded.
 
 ```js
 grunt.initConfig({
@@ -78,6 +84,24 @@ grunt.initConfig({
   },
 });
 ```
+
+#### Structured Option
+In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store only the list of files in `dest/custom_options_unstructured`. Folder `src/` will be ignored (the analysis starts at sub folders). The `clean` option will be ignored.  
+
+```js
+grunt.initConfig({
+  list_files: {
+    options: {
+      ignore: 'src/',
+      structured: false,
+    },
+    files: {
+      'dest/custom_options': ['src/testing/**', 'src/another_testing/**'],
+    },
+  },
+});
+```
+
 
 ## Upcoming
 - export YAML support
