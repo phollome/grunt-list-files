@@ -56,7 +56,7 @@ grunt.initConfig({
   list_files: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/another_testing'],
+      'dest/default_options': ['src/testing/**', 'src/another_testing/**'],
     },
   },
 });
@@ -73,7 +73,7 @@ grunt.initConfig({
       clean: false,
     },
     files: {
-      'dest/custom_options': ['src/testing', 'src/another_testing'],
+      'dest/custom_options': ['src/testing/**', 'src/another_testing/**'],
     },
   },
 });
