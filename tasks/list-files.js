@@ -20,7 +20,8 @@ module.exports = function(grunt) {
 
     var options = this.options({
       ignore: '',
-      clean: true
+      clean: true,
+      structured: true
     });
 
     this.files.forEach(function(file) {
@@ -40,18 +41,22 @@ module.exports = function(grunt) {
         if (!path) {
           return;
         }
-        var pathArr = path.replace(options.ignore, '').split('/');
-        if (grunt.file.isDir(cwd + path)) {
-          var dest = struct;
-          for (var i = 0, len = pathArr.length; i < len; i++) {
-            if (grunt.file.isDir(cwd + path) && !dest[pathArr[i]]) {
-              dest[pathArr[i]] = {
-                files: []
-              };
+        if (options.structured) {
+          var pathArr = path.replace(options.ignore, '').split('/');
+          if (grunt.file.isDir(cwd + path)) {
+            var dest = struct;
+            for (var i = 0, len = pathArr.length; i < len; i++) {
+              if (grunt.file.isDir(cwd + path) && !dest[pathArr[i]]) {
+                dest[pathArr[i]] = {
+                  files: []
+                };
+              }
+              dest = dest[pathArr[i]];
             }
-            dest = dest[pathArr[i]];
+            struct = deepMerge(struct, dest);
           }
-          struct = deepMerge(struct, dest);
+        } else {
+          struct['files'] = [];
         }
         if (grunt.file.isFile(cwd + path)) {
           return path;
@@ -60,17 +65,21 @@ module.exports = function(grunt) {
         if (!path) {
           return;
         }
-        var pathArr = path.replace(options.ignore, '').split('/');
-        pathArr.pop();
-        var dest = struct;
-        for (var i = 0, len = pathArr.length; i < len; i++) {
-          dest = dest[pathArr[i]];
-        }
-        if (dest.files) {
-          dest.files.push(path.replace(options.ignore, ''));
+        if (options.structured) {
+          var pathArr = path.replace(options.ignore, '').split('/');
+          pathArr.pop();
+          var dest = struct;
+          for (var i = 0, len = pathArr.length; i < len; i++) {
+            dest = dest[pathArr[i]];
+          }
+          if (dest.files) {
+            dest.files.push(path.replace(options.ignore, ''));
+          }
+        } else {
+          struct.files.push(path.replace(options.ignore, ''));
         }
       });
-      if (options.clean) {
+      if (options.clean && options.structured) {
         grunt.log.writeln(colors.italic('Removing empty elements by default.'));
         deepClean(struct);
       }
