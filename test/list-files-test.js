@@ -19,5 +19,16 @@ exports.list_files = {
     var expected = grunt.file.read('test/expected/custom_options');
     test.equal(actual, expected, 'Structures should be equal (with ignored path).');
     test.done();
+  },
+  unstructured: function(test) {
+    test.expect(1);
+    var actual = JSON.parse(grunt.file.read('tmp/custom_options_unstructured'));
+    var expected = JSON.parse(grunt.file.read('test/expected/custom_options_unstructured'));
+
+    actual.files.sort();
+    expected.files.sort();
+
+    test.equal(JSON.stringify(actual.files), JSON.stringify(expected.files), 'File paths should be equal (no structure).');
+    test.done();
   }
 };

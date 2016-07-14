@@ -42,6 +42,15 @@ module.exports = function(grunt) {
         files: {
           'tmp/custom_options': ['test/fixtures/**']
         }
+      },
+      custom_options_unstructured: {
+        options: {
+          ignore: 'test/fixtures/',
+          structured: false
+        },
+        files: {
+          'tmp/custom_options_unstructured': ['test/fixtures/**']
+        }
       }
     },
     nodeunit: {
