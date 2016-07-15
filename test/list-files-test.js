@@ -30,5 +30,16 @@ exports.list_files = {
 
     test.equal(JSON.stringify(actual.files), JSON.stringify(expected.files), 'File paths should be equal (no structure).');
     test.done();
+  },
+  combine: function(test) {
+    test.expect(1);
+    var actual = JSON.parse(grunt.file.read('tmp/custom_options_combine'));
+    var expected = JSON.parse(grunt.file.read('test/expected/custom_options_combine'));
+
+    actual.files.sort();
+    expected.files.sort();
+
+    test.equal(JSON.stringify(actual), JSON.stringify(expected), 'File lists and structures should be equal (with ignored path).');
+    test.done();
   }
 };
