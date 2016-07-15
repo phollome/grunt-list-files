@@ -1,6 +1,6 @@
 # grunt-list-files
 
-> List recursivly all files of given folders.
+> List recursivly all files of given folder.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -61,21 +61,21 @@ A boolean value that is used to decide if output will be both structured and uns
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to analyse folder `src/testing` and `src/another_testing` and store the result in `dest/default_options`. No folder will be ignored and empty folder will be excluded from output.
+In this example, the default options are used to analyse folder `src/testing` and store the result in `dest/default_options`. No folder will be ignored and empty folder will be excluded from output.
 
 ```js
 grunt.initConfig({
  listfiles: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing/**', 'src/another_testing/**'],
+      'dest/default_options': ['src/testing/**'],
     },
   },
 });
 ```
 
 #### Custom Options
-In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store the result in `dest/custom_options`. Folder `src/` will be ignored (the analysis starts at sub folders) and empty folders are not excluded.
+In this example, custom options are used to analyse folder `src/testing` and store the result in `dest/custom_options`. Folder `src/` will be ignored (the analysis starts at sub folders) and empty folders are not excluded.
 
 ```js
 grunt.initConfig({
@@ -85,14 +85,14 @@ grunt.initConfig({
       clean: false,
     },
     files: {
-      'dest/custom_options': ['src/testing/**', 'src/another_testing/**'],
+      'dest/custom_options': ['src/testing/**'],
     },
   },
 });
 ```
 
 #### Structured Option
-In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store only the list of files in `dest/custom_options_unstructured`. Folder `src/` will be ignored (the analysis starts at sub folders). The `clean` option will be ignored.  
+In this example, custom options are used to analyse folder `src/testing` and store only the list of files in `dest/custom_options_unstructured`. Folder `src/` and `clean` option will be ignored (the analysis starts at sub folders).  
 
 ```js
 grunt.initConfig({
@@ -102,14 +102,14 @@ grunt.initConfig({
       structured: false,
     },
     files: {
-      'dest/custom_options_unstructured': ['src/testing/**', 'src/another_testing/**'],
+      'dest/custom_options_unstructured': ['src/testing/**'],
     },
   },
 });
 ```
 
 #### Combine Option
-In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store both the list of files and the structure in `dest/custom_options_combine`. Folder `src/` will be ignored (the analysis starts at sub folders). The `structured` option will be ignored.  
+In this example, custom options are used to analyse folder `src/testing` and store both the list of files and the structure in `dest/custom_options_combine`. Folder `src/` and `clean` option will be ignored (the analysis starts at sub folders).
 
 ```js
 grunt.initConfig({
@@ -119,7 +119,7 @@ grunt.initConfig({
       combine: true,
     },
     files: {
-      'dest/custom_options_combine': ['src/testing/**', 'src/another_testing/**'],
+      'dest/custom_options_combine': ['src/testing/**'],
     },
   },
 });
