@@ -52,6 +52,12 @@ Default value: `true`
 
 A boolean value that is used to decide if output will be structured.
 
+#### options.combine
+Type: `Boolean`
+Default value: `false`
+
+A boolean value that is used to decide if output will be both structured and unstructured.
+
 ### Usage Examples
 
 #### Default Options
@@ -59,7 +65,7 @@ In this example, the default options are used to analyse folder `src/testing` an
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {},
     files: {
       'dest/default_options': ['src/testing/**', 'src/another_testing/**'],
@@ -73,7 +79,7 @@ In this example, custom options are used to analyse folder `src/testing` and `sr
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {
       ignore: 'src/',
       clean: false,
@@ -90,18 +96,34 @@ In this example, custom options are used to analyse folder `src/testing` and `sr
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {
       ignore: 'src/',
       structured: false,
     },
     files: {
-      'dest/custom_options': ['src/testing/**', 'src/another_testing/**'],
+      'dest/custom_options_unstructured': ['src/testing/**', 'src/another_testing/**'],
     },
   },
 });
 ```
 
+#### Combine Option
+In this example, custom options are used to analyse folder `src/testing` and `src/another_testing` and store both the list of files and the structure in `dest/custom_options_combine`. Folder `src/` will be ignored (the analysis starts at sub folders). The `structured` option will be ignored.  
+
+```js
+grunt.initConfig({
+ listfiles: {
+    options: {
+      ignore: 'src/',
+      combine: true,
+    },
+    files: {
+      'dest/custom_options_combine': ['src/testing/**', 'src/another_testing/**'],
+    },
+  },
+});
+```
 
 ## Upcoming
 - export YAML support
