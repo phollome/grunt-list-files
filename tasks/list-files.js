@@ -21,11 +21,19 @@ module.exports = function(grunt) {
     var options = this.options({
       ignore: '',
       clean: true,
-      structured: true
+      structured: true,
+      combine: false
     });
 
+    if(options.combine && !options.structured) {
+      options.structured = true;
+    }
+
     this.files.forEach(function(file) {
-      var struct = {};
+      var struct = options.combine ? {
+        structure: {},
+        files: []
+      } : {};
       var cwd = file.cwd || '';
       file.src.filter(function(path) {
         var realPath = cwd + path;
@@ -44,7 +52,7 @@ module.exports = function(grunt) {
         if (options.structured) {
           var pathArr = path.replace(options.ignore, '').split('/');
           if (grunt.file.isDir(cwd + path)) {
-            var dest = struct;
+            var dest = options.combine ? struct.structure : struct;
             for (var i = 0, len = pathArr.length; i < len; i++) {
               if (grunt.file.isDir(cwd + path) && !dest[pathArr[i]]) {
                 dest[pathArr[i]] = {
@@ -53,7 +61,11 @@ module.exports = function(grunt) {
               }
               dest = dest[pathArr[i]];
             }
-            struct = deepMerge(struct, dest);
+            if(options.combine) {
+              struct.structure = deepMerge(struct.structure, dest);
+            } else {
+              struct = deepMerge(struct, dest);
+            }
           }
         } else {
           struct['files'] = [];
@@ -68,14 +80,15 @@ module.exports = function(grunt) {
         if (options.structured) {
           var pathArr = path.replace(options.ignore, '').split('/');
           pathArr.pop();
-          var dest = struct;
+          var dest = options.combine ? struct.structure : struct;
           for (var i = 0, len = pathArr.length; i < len; i++) {
             dest = dest[pathArr[i]];
           }
           if (dest.files) {
             dest.files.push(path.replace(options.ignore, ''));
           }
-        } else {
+        }
+        if (!options.structured || options.combine){
           struct.files.push(path.replace(options.ignore, ''));
         }
       });
