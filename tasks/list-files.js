@@ -30,10 +30,14 @@ module.exports = function(grunt) {
     }
 
     this.files.forEach(function(file) {
-      var struct = options.combine ? {
-        structure: {},
-        files: []
-      } : {};
+      var struct = {};
+      if(options.structured) {
+        struct['structure'] = {};
+      }
+      if(options.combine || !options.structured) {
+        struct['files'] = [];
+      }
+
       var cwd = file.cwd || '';
       file.src.filter(function(path) {
         var realPath = cwd + path;
@@ -52,7 +56,7 @@ module.exports = function(grunt) {
         if (options.structured) {
           var pathArr = path.replace(options.ignore, '').split('/');
           if (grunt.file.isDir(cwd + path)) {
-            var dest = options.combine ? struct.structure : struct;
+            var dest = struct.structure;
             for (var i = 0, len = pathArr.length; i < len; i++) {
               if (grunt.file.isDir(cwd + path) && !dest[pathArr[i]]) {
                 dest[pathArr[i]] = {
@@ -61,14 +65,8 @@ module.exports = function(grunt) {
               }
               dest = dest[pathArr[i]];
             }
-            if(options.combine) {
-              struct.structure = deepMerge(struct.structure, dest);
-            } else {
-              struct = deepMerge(struct, dest);
-            }
+            struct.structure = deepMerge(struct.structure, dest);
           }
-        } else {
-          struct['files'] = [];
         }
         if (grunt.file.isFile(cwd + path)) {
           return path;
@@ -80,7 +78,7 @@ module.exports = function(grunt) {
         if (options.structured) {
           var pathArr = path.replace(options.ignore, '').split('/');
           pathArr.pop();
-          var dest = options.combine ? struct.structure : struct;
+          var dest = struct.structure;
           for (var i = 0, len = pathArr.length; i < len; i++) {
             dest = dest[pathArr[i]];
           }
@@ -92,6 +90,9 @@ module.exports = function(grunt) {
           struct.files.push(path.replace(options.ignore, ''));
         }
       });
+      if (options.ignore !== '') {
+        struct['ignored'] = options.ignore;
+      }
       if (options.clean && options.structured) {
         grunt.log.writeln(colors.italic('Removing empty elements by default.'));
         deepClean(struct);
