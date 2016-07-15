@@ -54,7 +54,7 @@ A boolean value that is used to decide if output will be structured.
 
 #### options.combine
 Type: `Boolean`
-Default value: `true`
+Default value: `false`
 
 A boolean value that is used to decide if output will be both structured and unstructured.
 
@@ -65,7 +65,7 @@ In this example, the default options are used to analyse folder `src/testing` an
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {},
     files: {
       'dest/default_options': ['src/testing/**', 'src/another_testing/**'],
@@ -79,7 +79,7 @@ In this example, custom options are used to analyse folder `src/testing` and `sr
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {
       ignore: 'src/',
       clean: false,
@@ -96,7 +96,7 @@ In this example, custom options are used to analyse folder `src/testing` and `sr
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {
       ignore: 'src/',
       structured: false,
@@ -113,10 +113,10 @@ In this example, custom options are used to analyse folder `src/testing` and `sr
 
 ```js
 grunt.initConfig({
-  list_files: {
+ listfiles: {
     options: {
       ignore: 'src/',
-      combine: false,
+      combine: true,
     },
     files: {
       'dest/custom_options_combine': ['src/testing/**', 'src/another_testing/**'],
