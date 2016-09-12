@@ -36,6 +36,7 @@ module.exports = function(grunt) {
       custom_options: {
         options: {
           ignore: 'test/fixtures/',
+          route: 'fixtures',
           clean: false
 
         },
