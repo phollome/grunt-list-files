@@ -93,6 +93,9 @@ module.exports = function(grunt) {
       if (options.ignore !== '') {
         struct['ignored'] = options.ignore;
       }
+      if(options.route) {
+        struct['route'] = options.route;
+      }
       if (options.clean && options.structured) {
         grunt.log.writeln(colors.italic('Removing empty elements by default.'));
         deepClean(struct);
