@@ -58,6 +58,12 @@ Default value: `false`
 
 A boolean value that is used to decide if output will be both structured and unstructured.
 
+#### options.route
+Type: `String`
+Default value: `undefined
+
+A `string` value that can be used if file list is used e.g. on a server.
+
 ### Usage Examples
 
 #### Default Options
